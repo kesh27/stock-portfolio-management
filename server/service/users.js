@@ -1,11 +1,11 @@
 import User from "../models/users";
 
 class UserService { 
-    addUser(email) {
+    async addUser(email) {
         var user = new User({
             email: email
         });
-        user.save()
+        await user.save()
         return User.findOne({email: email})
     }
 
