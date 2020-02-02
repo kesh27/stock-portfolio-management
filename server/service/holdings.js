@@ -2,10 +2,14 @@ import Holdings from "../models/holdings";
 // import EventManager from './EventManager';
 
 class HoldingService { 
-    async getHoldingByPortfolioAndTicker (portfolioId, ticker) {
+    getHoldingByPortfolioAndTicker (portfolioId, ticker) {
         return Holdings.findOne(
             { portfolioId: portfolioId, tickerSymbol: ticker }
         );
+    }
+
+    getHoldingsByPortfolio (portfolioId) {
+        return Holdings.find({ portfolioId: portfolioId });
     }
 
     async updateHolding (

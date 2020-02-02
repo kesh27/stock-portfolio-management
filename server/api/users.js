@@ -23,6 +23,8 @@ router.get('/users/:userEmail', async (req,res,next) => {
             return
         }
     } catch (err) {
+        res.status(400);
+        res.send({status: 400, ok: false, message: err.message})
         next(err)
     }
 });

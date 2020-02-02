@@ -53,6 +53,10 @@ class TradeService {
         return Trade.findOne({_id: id});
     }
 
+    getTradesInPortfolio(portfolioId) {
+        return Trade.find({portfolioId: portfolioId})
+    }
+
 }
 
 const tradeService = new TradeService();
