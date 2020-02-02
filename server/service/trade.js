@@ -33,16 +33,20 @@ class TradeService {
         tradeId,
         payload
     ) {
-        var trade = await Trade.findOneAndUpdate(
+        const oldTrade = await this.getTrade(tradeId)
+        var updatedTrade = await Trade.findOneAndUpdate(
             { _id: tradeId },
             { $set: payload },
             { new: true }
         )
-        return trade
+        HoldingService.tradeUpdated(oldTrade, updatedTrade)
+        return updatedTrade
     }
 
     async deleteTrade (id) {
-        return Trade.findByIdAndDelete(id)
+        const deletedTrade = await Trade.findByIdAndDelete(id)
+        HoldingService.tradeDeleted(deletedTrade)
+        return deletedTrade
     }
 
     getTrade(id) {
