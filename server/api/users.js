@@ -1,6 +1,7 @@
 import express from "express";
 import UserService from "../service/users";
 import validator from 'validator';
+import httpErrors from 'http-errors';
 
 const router = express.Router();
 
@@ -41,6 +42,8 @@ router.post('/users', async (req,res,next) => {
             res.send({data: user, status: 200, ok: true})
         }
     } catch (err) {
+        res.status(400);
+        res.send({status: 400, ok: false, message: err.message})
         next(err)
     }
 });

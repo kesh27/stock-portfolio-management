@@ -5,12 +5,16 @@ class UserService {
         var user = new User({
             email: email
         });
-        await user.save()
-        return User.findOne({email: email})
+        const userData = await user.save()
+        return userData
     }
 
     findUser(email) {
         return User.findOne({email: email});
+    }
+
+    findUserById(id) {
+        return User.findOne({_id: id})
     }
 }
 
