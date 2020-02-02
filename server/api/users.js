@@ -11,6 +11,7 @@ router.get('/users/:userEmail', async (req,res,next) => {
         if (!validator.isEmail(email)) {
             res.status(400)
             res.send({message: "Validation error", status: 400, ok: false})
+            return
         }
         const userInstance = await UserService.findUser(email);
         if (userInstance) {
@@ -19,6 +20,7 @@ router.get('/users/:userEmail', async (req,res,next) => {
         else {
             res.status(404)
             res.send({message: "User doesn't exists", status: 404, ok: false})
+            return
         }
     } catch (err) {
         next(err)
@@ -31,11 +33,13 @@ router.post('/users', async (req,res,next) => {
         if (!validator.isEmail(email)) {
             res.status(400)
             res.send({message: "Validation error", status: 400, ok: false})
+            return
         }
         const userInstance = await UserService.findUser(email);
         if (userInstance) {
             res.status(400)
             res.send({message: "User already exists", status: 400, ok: false})
+            return
         }
         else {
             const user = await UserService.addUser(email);

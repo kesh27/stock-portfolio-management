@@ -1,4 +1,5 @@
 import express from "express";
+import HoldingService from "../service/holdings";
 import TradeService from "../service/trade";
 import UserService from "../service/users";
 import mongoose from 'mongoose';
@@ -15,11 +16,27 @@ router.post('/trade', async(req,res,next) => {
         if (!mongoose.Types.ObjectId.isValid(portfolioId)) {
             res.status(400)
             res.send({status: 400, ok: false, message: 'Invalid portfolio id'})
+            return
         }
         const validatePortfolio = await UserService.findUserById(portfolioId);
         if (!validatePortfolio) {
             res.status(400)
-            res.send({status: 200, ok: false, message: 'Invalid portfolio id'})
+            res.send({status: 400, ok: false, message: 'Invalid portfolio id'})
+            return
+        }
+        // User should have sufficient number of shares before placing sell order
+        if(tradeType === "Sell") {
+            const holdings = await HoldingService.getHoldingByPortfolioAndTicker(portfolioId, tickerSymbol);
+            if (!holdings) {
+                res.status(400)
+                res.send({status: 400, ok: false, message: 'Insufficient shares to place sell order'})
+                return
+            }
+            else if(holdings.sharesQuantity < quantity) {
+                res.status(400)
+                res.send({status: 400, ok: false, message: 'Insufficient shares to place sell order'})
+                return
+            }
         }
         const trade = await TradeService.addTrade(
             portfolioId,

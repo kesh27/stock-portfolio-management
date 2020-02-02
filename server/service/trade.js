@@ -1,4 +1,6 @@
 import Trade from "../models/trade";
+import HoldingService from "./holdings";
+// import EventManager from './EventManager';
 
 class TradeService { 
     async addTrade(
@@ -16,6 +18,14 @@ class TradeService {
             price
         });
         const tradeData = await trade.save()
+        // EventManager.emitEvent('trade_create', tradeData, {
+        //     portfolioId,
+        //     tickerSymbol,
+        //     tradeType,
+        //     quantity,
+        //     price
+        // });
+        HoldingService.tradeAdded(tradeData)
         return tradeData
     }
 
