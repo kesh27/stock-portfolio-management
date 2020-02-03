@@ -56,7 +56,7 @@ class HoldingService {
                 var newAveragePrice = ((oldPrice * oldQuantity) + (currentPrice * currentQuantity))/newQuantity;
                 const newHolding = ref.updateHolding(existingHolding._id, { averageBuyPrice: newAveragePrice, sharesQuantity: newQuantity })
             } else if(data.tradeType === "Sell") {
-                var newQuantity = Math.max((oldQuantity - currentQuantity), 0);
+                var newQuantity = Math.abs(oldQuantity - currentQuantity);
                 const newHolding = ref.updateHolding(existingHolding._id, { sharesQuantity: newQuantity })
             }
         }
@@ -83,11 +83,11 @@ class HoldingService {
         var newQuantity = newData.quantity
         var currentQuantity = existingHolding.sharesQuantity
         if (newData.tradeType === "Sell") {
-            const updatedQuantity = Math.max((currentQuantity + oldQuantity - newQuantity), 0)
+            const updatedQuantity = Math.abs(currentQuantity + oldQuantity - newQuantity)
             const newHolding = ref.updateHolding(existingHolding._id, { sharesQuantity: updatedQuantity })
         }
         else if (newData.tradeType === "Buy") {
-            var updatedQuantity = currentQuantity - oldQuantity + newQuantity
+            var updatedQuantity = Math.abs(currentQuantity - oldQuantity + newQuantity)
             var currentAverage = existingHolding.averageBuyPrice;
             var oldPrice = oldData.price
             var newPrice = newData.price
@@ -107,11 +107,11 @@ class HoldingService {
         var currentQuantity = existingHolding.sharesQuantity;
         var oldQuantity = data.quantity;
         if (data.tradeType === "Sell") {
-            const updatedQuantity =  oldQuantity + currentQuantity
+            const updatedQuantity =  Math.abs(oldQuantity + currentQuantity)
             const newHolding = ref.updateHolding(existingHolding._id, { sharesQuantity: updatedQuantity })
         }
         else if (data.tradeType === "Buy") {
-            var updatedQuantity =  oldQuantity - currentQuantity
+            var updatedQuantity =  Math.abs(oldQuantity - currentQuantity)
             var currentAverage = existingHolding.averageBuyPrice;
             var updatedAveragePrice = 0;
             if (updatedQuantity !== 0) {
