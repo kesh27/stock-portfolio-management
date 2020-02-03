@@ -52,8 +52,8 @@ class HoldingService {
             var currentPrice = data.price;
             var currentQuantity = data.quantity;
             if(data.tradeType === "Buy") {
-                var newQuantity = oldQuantity + currentQuantity;
-                var newAveragePrice = ((oldPrice * oldQuantity) + (currentPrice * currentQuantity))/newQuantity;
+                var newQuantity = Math.abs(oldQuantity + currentQuantity);
+                var newAveragePrice = Math.abs(((oldPrice * oldQuantity) + (currentPrice * currentQuantity))/newQuantity);
                 const newHolding = ref.updateHolding(existingHolding._id, { averageBuyPrice: newAveragePrice, sharesQuantity: newQuantity })
             } else if(data.tradeType === "Sell") {
                 var newQuantity = Math.abs(oldQuantity - currentQuantity);
@@ -93,7 +93,7 @@ class HoldingService {
             var newPrice = newData.price
             var updatedAveragePrice = 0
             if (updatedQuantity !== 0 ) {
-                updatedAveragePrice = ((currentAverage * currentQuantity) - (oldQuantity * oldPrice) + (newQuantity * newPrice))/updatedQuantity
+                updatedAveragePrice = Math.abs(((currentAverage * currentQuantity) - (oldQuantity * oldPrice) + (newQuantity * newPrice))/updatedQuantity)
             }
             const newHolding = ref.updateHolding(existingHolding._id, { averageBuyPrice: updatedAveragePrice, sharesQuantity: updatedQuantity })
         }
@@ -115,7 +115,7 @@ class HoldingService {
             var currentAverage = existingHolding.averageBuyPrice;
             var updatedAveragePrice = 0;
             if (updatedQuantity !== 0) {
-                updatedAveragePrice = ((currentAverage * currentQuantity) - (data.price * data.quantity))/updatedQuantity
+                updatedAveragePrice = Math.abs(((currentAverage * currentQuantity) - (data.price * data.quantity))/updatedQuantity)
             }  
             const newHolding = ref.updateHolding(existingHolding._id, { averageBuyPrice: updatedAveragePrice, sharesQuantity: updatedQuantity })
         }
