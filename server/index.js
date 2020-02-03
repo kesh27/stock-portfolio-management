@@ -25,8 +25,7 @@ function connect() {
       .once('open', listen);
     return mongoose.connect(process.env.DATABASE_URL, {
       keepAlive: 1,
-      useNewUrlParser: true,
-      useUnifiedTopology: false
+      useNewUrlParser: true
     });
   }
 
