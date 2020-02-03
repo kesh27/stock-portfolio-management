@@ -17,7 +17,7 @@ async function isSellable (portfolioId, tickerSymbol, quantity) {
     return true
 };
 
-router.post('/trade', async(req,res,next) => {
+router.post('/trade/', async(req,res,next) => {
     try {
         const portfolioId = req.body.portfolioId
         const tickerSymbol = req.body.tickerSymbol
@@ -56,7 +56,7 @@ router.post('/trade', async(req,res,next) => {
     }
 })
 
-router.patch('/trade/:tradeId', async(req,res,next) => {
+router.patch('/trade/:tradeId/', async(req,res,next) => {
     try {
         const tradeId = req.params.tradeId;
         if (!mongoose.Types.ObjectId.isValid(tradeId)) {
@@ -97,7 +97,7 @@ router.patch('/trade/:tradeId', async(req,res,next) => {
     }
 })
 
-router.delete('/trade/:tradeId', async(req,res,next) => {
+router.delete('/trade/:tradeId/', async(req,res,next) => {
     try {
         const tradeId = req.params.tradeId;
         if (!mongoose.Types.ObjectId.isValid(tradeId)) {

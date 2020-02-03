@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 const router = express.Router();
 
-router.get('/holdings/:portfolioId', async(req,res,next) => {
+router.get('/holdings/:portfolioId/', async(req,res,next) => {
     try {
         const portfolioId = req.params.portfolioId
         // check if it is valid object id

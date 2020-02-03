@@ -5,7 +5,7 @@ import httpErrors from 'http-errors';
 
 const router = express.Router();
 
-router.get('/users/:userEmail', async (req,res,next) => {
+router.get('/users/:userEmail/', async (req,res,next) => {
     try {
         const email = req.params.userEmail
         if (!validator.isEmail(email)) {
@@ -29,7 +29,7 @@ router.get('/users/:userEmail', async (req,res,next) => {
     }
 });
 
-router.post('/users', async (req,res,next) => {
+router.post('/users/', async (req,res,next) => {
     try {
         const email = req.body.email
         if (!validator.isEmail(email)) {
