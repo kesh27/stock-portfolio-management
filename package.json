@@ -28,8 +28,6 @@
     "express": "^4.17.1",
     "migrate-mongoose": "^4.0.0",
     "mongoose": "^5.8.10",
-    "mongoose-uuid": "0.0.2",
-    "mongoose-uuid2": "^2.3.0",
     "nodemon": "^2.0.2",
     "validator": "^12.2.0"
   },
